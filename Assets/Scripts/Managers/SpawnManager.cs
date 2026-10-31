@@ -234,7 +234,7 @@ public class SpawnManager : MonoBehaviour
     private void SpawnStaticObstacle(int lane, float z)
     {
         StaticObstacleCar car = staticObstaclePool.Get();
-        Place(car, staticObstaclePrefab.transform, lane, z);
+        Place(car, staticObstaclePrefab.transform, lane, z, true);
         car.Bind(player.transform);
         Register(car, lane);
         car.OnSpawned();
@@ -244,18 +244,22 @@ public class SpawnManager : MonoBehaviour
     {
         MovingObstacleCar car = movingObstaclePool.Get();
         car.ApproachSpeed = movingApproachSpeed;
-        Place(car, movingObstaclePrefab.transform, lane, z);
+        Place(car, movingObstaclePrefab.transform, lane, z, true);
         car.Bind(player.transform);
         Register(car, lane);
         activeMovingObstacles++;
         car.OnSpawned();
     }
 
-    private static void Place(Component instance, Transform prefabTransform, int lane, float z)
+    private static void Place(Component instance, Transform prefabTransform, int lane, float z, bool turnAround = false)
     {
+        Quaternion rotation = turnAround
+            ? prefabTransform.rotation * Quaternion.Euler(0f, 180f, 0f)
+            : prefabTransform.rotation;
+
         instance.transform.SetPositionAndRotation(
             new Vector3(LaneX[lane], prefabTransform.position.y, z),
-            prefabTransform.rotation);
+            rotation);
     }
 
     private void Register(Interactable item, int lane)
