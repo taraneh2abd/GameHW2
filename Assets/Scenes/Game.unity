@@ -163,6 +163,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &238772676
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 238772678}
+  - component: {fileID: 238772677}
+  m_Layer: 0
+  m_Name: ScoreManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &238772677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238772676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed24ea5661a9fed4397a72b89a6f3654, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScoreManager
+  player: {fileID: 5791343633471770432}
+  pointsPerMeter: 1
+  pointsPerCoin: 10
+--- !u!4 &238772678
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238772676}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &350157913
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,6 +256,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 753683310}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &351883470 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4735923593767866529, guid: 3281d37c9453ee2468dc696d700ad3f7, type: 3}
+  m_PrefabInstance: {fileID: 5791343633471770428}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &455640180
 GameObject:
   m_ObjectHideFlags: 0
@@ -722,6 +774,84 @@ Transform:
   m_Children: []
   m_Father: {fileID: 753683310}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1516230196
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1516230198}
+  - component: {fileID: 1516230197}
+  m_Layer: 0
+  m_Name: DifficultyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1516230197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516230196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0ecef125c6071b46bee55f9214777e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DifficultyManager
+  player: {fileID: 5791343633471770432}
+  spawnManager: {fileID: 753683309}
+  rampDistance: 2500
+  progressCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxSpeed: 24
+  maxObstacleWeight: 9
+  minEmptyWeight: 0.25
+  minRowSpacing: 12.5
+  maxMovingObstacleChance: 0.45
+  maxSecondObstacleChance: 0.4
+  maxMovingApproachSpeed: 9
+--- !u!4 &1516230198
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516230196}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1849549971
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,7 +957,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4735923593767866529, guid: 3281d37c9453ee2468dc696d700ad3f7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5791343633471770436}
+    - targetCorrespondingSourceObject: {fileID: 4735923593767866529, guid: 3281d37c9453ee2468dc696d700ad3f7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5791343633471770435}
   m_SourcePrefab: {fileID: 100100000, guid: 3281d37c9453ee2468dc696d700ad3f7, type: 3}
 --- !u!4 &5791343633471770429 stripped
 Transform:
@@ -839,12 +975,48 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3550244744387606425, guid: 3281d37c9453ee2468dc696d700ad3f7, type: 3}
   m_PrefabInstance: {fileID: 5791343633471770428}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 351883470}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8092764629a3ed049accef8e51100a8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCarController
+--- !u!114 &5791343633471770435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351883470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abb62f8219963c44ca53dcd35b68094a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerFuel
+  drainPerSecond: 4
+  refillPerCan: 35
+  MaxFuel: 100
+  CurrentFuel: 0
+--- !u!114 &5791343633471770436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351883470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e11e6694712c584eb0587455a9188e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerLives
+  cameraFollow: {fileID: 1436289330}
+  hitColor: {r: 1, g: 0.1, b: 0.1, a: 1}
+  invulnerabilityDuration: 1.5
+  flashDuration: 0.35
+  shakeDuration: 0.35
+  shakeMagnitude: 0.35
+  MaxLives: 3
+  CurrentLives: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -856,3 +1028,5 @@ SceneRoots:
   - {fileID: 5791343633471770428}
   - {fileID: 455640182}
   - {fileID: 753683310}
+  - {fileID: 238772678}
+  - {fileID: 1516230198}
