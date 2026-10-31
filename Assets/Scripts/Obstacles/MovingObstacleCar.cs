@@ -14,7 +14,7 @@ public class MovingObstacleCar : ObstacleCar
     {
         if (GameManager.Instance == null || GameManager.Instance.CurrentState == GameState.Playing)
         {
-            transform.position += Vector3.back * (approachSpeed * Time.deltaTime);
+            transform.position += Vector3.forward * (approachSpeed * Time.deltaTime);
         }
 
         base.Tick();
