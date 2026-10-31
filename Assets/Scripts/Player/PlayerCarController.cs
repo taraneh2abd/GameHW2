@@ -14,6 +14,7 @@ public class PlayerCarController : MonoBehaviour
     private bool subscribed;
 
     public int CurrentLane => currentLane;
+    public float CurrentSpeed => currentSpeed;
 
     private void OnEnable()
     {
