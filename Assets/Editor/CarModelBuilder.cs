@@ -10,6 +10,15 @@ public static class CarModelBuilder
     private const string MovingPrefab = "Assets/Prefabs/MovingObstacleCar.prefab";
     private const float GroundOffset = 0.1f;
 
+    private static readonly Color Red = new Color(0.85f, 0.1f, 0.1f);
+    private static readonly Color Blue = new Color(0.1f, 0.3f, 0.9f);
+    private static readonly Color Yellow = new Color(1f, 0.8f, 0.05f);
+    private static readonly Color Orange = new Color(1f, 0.45f, 0.05f);
+    private static readonly Color White = new Color(0.92f, 0.92f, 0.92f);
+    private static readonly Color Silver = new Color(0.65f, 0.67f, 0.7f);
+    private static readonly Color Green = new Color(0.1f, 0.65f, 0.2f);
+    private static readonly Color Purple = new Color(0.5f, 0.15f, 0.75f);
+
     private class Spec
     {
         public string name;
@@ -76,12 +85,14 @@ public static class CarModelBuilder
     public static void Build()
     {
         Mats mats = LoadOrCreateMaterials();
-        BuildPrefab(StaticPrefab, mats, new[] { Sedan, Suv, Pickup, Van, BoxTruck, Hatchback });
-        BuildPrefab(MovingPrefab, mats, new[] { Sports, Hatchback, Sedan, Suv });
+        BuildPrefab(StaticPrefab, mats, new[] { Sedan, Suv, Pickup, Van, BoxTruck, Hatchback },
+            new[] { Red, Blue, White, Silver, Green, Purple });
+        BuildPrefab(MovingPrefab, mats, new[] { Sports, Hatchback, Sedan, Suv },
+            new[] { Red, Yellow, Orange, Blue, White, Green });
         AssetDatabase.SaveAssets();
     }
 
-    private static void BuildPrefab(string path, Mats mats, Spec[] specs)
+    private static void BuildPrefab(string path, Mats mats, Spec[] specs, Color[] palette)
     {
         GameObject root = PrefabUtility.LoadPrefabContents(path);
         try
@@ -108,6 +119,10 @@ public static class CarModelBuilder
             root.transform.localScale = Vector3.one;
 
             BoxCollider box = root.GetComponent<BoxCollider>();
+            ObstacleCar car = root.GetComponent<ObstacleCar>();
+            SerializedObject so = new SerializedObject(car);
+            SerializedProperty list = so.FindProperty("variants");
+            list.arraySize = specs.Length;
             for (int i = 0; i < specs.Length; i++)
             {
                 GameObject variant = BuildVariant(root.transform, specs[i], mats);
@@ -119,8 +134,22 @@ public static class CarModelBuilder
                     box.isTrigger = true;
                 }
 
+                SerializedProperty entry = list.GetArrayElementAtIndex(i);
+                entry.FindPropertyRelative("root").objectReferenceValue = variant;
+                entry.FindPropertyRelative("colliderCenter").vector3Value = bounds.center;
+                entry.FindPropertyRelative("colliderSize").vector3Value = bounds.size;
                 variant.SetActive(i == 0);
             }
+
+            SerializedProperty paletteProp = so.FindProperty("palette");
+            paletteProp.arraySize = palette.Length;
+            for (int i = 0; i < palette.Length; i++)
+            {
+                paletteProp.GetArrayElementAtIndex(i).colorValue = palette[i];
+            }
+
+            so.FindProperty("bodyMaterial").objectReferenceValue = mats.body;
+            so.ApplyModifiedProperties();
 
             PrefabUtility.SaveAsPrefabAsset(root, path);
         }
