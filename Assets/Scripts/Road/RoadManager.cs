@@ -5,9 +5,9 @@ public class RoadManager : MonoBehaviour
 {
     [SerializeField] private RoadSegmentPool segmentPool;
     [SerializeField] private RoadSegment segmentPrefab;
-    [SerializeField] private int windowSize = 6;
-    [SerializeField] private float lookaheadDistance = 10f;
-    [SerializeField] private float recycleThreshold = 5f;
+    [SerializeField] private int spareSegments = 2;
+    [SerializeField] private float lookaheadDistance = 150f;
+    [SerializeField] private float recycleThreshold = 20f;
 
     [Header("Placeholder driving (until feat/car-control wires in the real player)")]
     [SerializeField] private bool usePlaceholderDriving = true;
@@ -19,12 +19,19 @@ public class RoadManager : MonoBehaviour
 
     private void Start()
     {
-        if (segmentPool != null && segmentPrefab != null)
+        if (segmentPool == null || segmentPrefab == null)
         {
-            segmentPool.Initialize(segmentPrefab, windowSize);
+            return;
         }
 
-        for (int i = 0; i < windowSize; i++)
+        float segmentLength = segmentPrefab.GetLength();
+        int needed = Mathf.CeilToInt((lookaheadDistance + recycleThreshold) / segmentLength) + 1 + spareSegments;
+        if (segmentPool.TotalCount < needed)
+        {
+            segmentPool.Initialize(segmentPrefab, needed - segmentPool.TotalCount);
+        }
+
+        while (nextSpawnZ - currentDistance < lookaheadDistance)
         {
             SpawnNextSegment();
         }
@@ -51,40 +58,29 @@ public class RoadManager : MonoBehaviour
 
     private void Tick(float distance)
     {
-        while (activeSegments.Count > 0 && GetFrontEdge() - distance < lookaheadDistance)
+        if (segmentPool == null)
         {
-            SpawnNextSegment();
+            return;
         }
 
-        while (activeSegments.Count > 0 && GetRearEdge(activeSegments[0]) < distance - recycleThreshold)
+        while (activeSegments.Count > 0 && GetSegmentFrontEdge(activeSegments[0]) < distance - recycleThreshold)
         {
             RecycleRearSegment();
         }
-    }
 
-    private float GetFrontEdge()
-    {
-        if (activeSegments.Count == 0)
+        while (nextSpawnZ - distance < lookaheadDistance)
         {
-            return nextSpawnZ;
+            SpawnNextSegment();
         }
-
-        RoadSegment front = activeSegments[activeSegments.Count - 1];
-        return front.transform.position.z + front.GetLength() * 0.5f;
     }
 
-    private float GetRearEdge(RoadSegment segment)
+    private float GetSegmentFrontEdge(RoadSegment segment)
     {
         return segment.transform.position.z + segment.GetLength() * 0.5f;
     }
 
     private void SpawnNextSegment()
     {
-        if (segmentPool == null)
-        {
-            return;
-        }
-
         RoadSegment segment = segmentPool.Get();
         float centerZ = nextSpawnZ + segment.GetLength() * 0.5f;
         segment.transform.position = new Vector3(0f, 0f, centerZ);
