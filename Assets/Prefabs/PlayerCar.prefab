@@ -1038,8 +1038,8 @@ MonoBehaviour:
   maxLightIntensity: 12
   minLightRange: 4
   maxLightRange: 7
-  minEmission: 1.5
-  maxEmission: 4
+  minEmission: 0.6
+  maxEmission: 1.5
   colorBySpeed:
     serializedVersion: 2
     key0: {r: 0.1, g: 0.6, b: 1, a: 1}

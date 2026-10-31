@@ -20,8 +20,8 @@ public class NeonUnderglow : MonoBehaviour
     [SerializeField] private float maxLightRange = 7f;
 
     [Header("Emission (HDR)")]
-    [SerializeField] private float minEmission = 1.5f;
-    [SerializeField] private float maxEmission = 4f;
+    [SerializeField] private float minEmission = 0.6f;
+    [SerializeField] private float maxEmission = 1.5f;
 
     [Header("Color")]
     [SerializeField] private Gradient colorBySpeed;
