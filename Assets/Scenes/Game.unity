@@ -4469,7 +4469,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 300
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -4790,9 +4790,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoadManager
   segmentPool: {fileID: 1463709304}
   segmentPrefab: {fileID: 4405618626901172207, guid: 0627d8877a8197a4e8ef836c93aa186d, type: 3}
-  windowSize: 6
-  lookaheadDistance: 10
-  recycleThreshold: 5
+  spareSegments: 2
+  lookaheadDistance: 150
+  recycleThreshold: 20
   usePlaceholderDriving: 0
   placeholderSpeed: 8
 --- !u!4 &1463709306
