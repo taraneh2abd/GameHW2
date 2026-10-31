@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameState initialState = GameState.Playing;
 
+    private static bool skipMenuOnNextLoad;
+
     private bool subscribed;
 
     public GameState CurrentState { get; private set; }
@@ -31,8 +33,15 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
-        CurrentState = initialState;
-        Time.timeScale = initialState == GameState.Playing ? 1f : 0f;
+        GameState startState = initialState;
+        if (skipMenuOnNextLoad && startState == GameState.Menu)
+        {
+            startState = GameState.Playing;
+        }
+
+        skipMenuOnNextLoad = false;
+        CurrentState = startState;
+        Time.timeScale = startState == GameState.Playing ? 1f : 0f;
     }
 
     private void OnEnable()
@@ -109,6 +118,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
+        skipMenuOnNextLoad = true;
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
@@ -120,8 +130,9 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        Time.timeScale = 0f;
-        SetState(GameState.Menu);
+        skipMenuOnNextLoad = false;
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void SetState(GameState state)
